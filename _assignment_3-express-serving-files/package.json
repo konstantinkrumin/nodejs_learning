@@ -1,0 +1,24 @@
+{
+  "name": "assignment_3-express-serving-files",
+  "version": "1.0.0",
+  "description": "exploring the way express can serve files",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [
+    "express",
+    "expressjs",
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Konstantin Krumin",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
