@@ -8,7 +8,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const addData = require('./routes/add');
+const addData = require('./routes/add-user');
 const listRoutes = require('./routes/list');
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,7 +18,7 @@ app.use(addData.routes);
 app.use(listRoutes);
 
 app.use((req, res, next) => {
-  res.render('404', { pageTitle: 'Page Not Found' });
+  res.render('404', { pageTitle: 'Page Not Found', path: '' });
 });
 
 app.listen(3000);
