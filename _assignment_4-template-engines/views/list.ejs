@@ -6,9 +6,12 @@
     <%- include('includes/navigation.ejs') %>
     <main>
         <% if (users.length > 0) { %>
-            <% for(let user in users) { %>
-                <p><%= user.name %> </p>
-            <% } %> 
+            <ul>
+                <% for(let user of users) { %>
+                    <li><%= user.name %> </li>
+                <% } %> 
+            </ul>
+            
         <% } else { %>
             <h1>No users found</h1>
         <% } %>
