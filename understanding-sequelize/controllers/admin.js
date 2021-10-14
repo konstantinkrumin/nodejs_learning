@@ -13,18 +13,32 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  Product.create({
-    title: title,
-    price: price,
-    imageUrl: imageUrl,
-    description: description,
-  })
+  /* createProduct is a method that exists because we have a Product model that has many to one relationships with the User */
+  req.user
+    .createProduct({
+      title: title,
+      price: price,
+      imageUrl: imageUrl,
+      description: description,
+    })
     .then((result) => {
-      // console.log(result);
       console.log('Created Product');
       res.redirect('/admin/products');
     })
     .catch((err) => console.log(err));
+  // Product.create({
+  //   title: title,
+  //   price: price,
+  //   imageUrl: imageUrl,
+  //   description: description,
+  //   userId: req.user.id,
+  // })
+  //   .then((result) => {
+  //     // console.log(result);
+  //     console.log('Created Product');
+  //     res.redirect('/admin/products');
+  //   })
+  //   .catch((err) => console.log(err));
 };
 
 exports.getEditProduct = (req, res, next) => {
