@@ -13,7 +13,7 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const imageUrl = req.body.imageUrl;
   const description = req.body.description;
-  const product = new Product({ title: title, price: price, description: description, imageUrl: imageUrl });
+  const product = new Product({ title: title, price: price, description: description, imageUrl: imageUrl, userId: req.user });
   product
     .save() // this method comes from Mongoose
     .then((result) => {
@@ -70,6 +70,9 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+    // .select('title price -_id') YOU CAN CHOOSE WHICH FIELDS TO INCLUDE AND EXCLUDE
+    // .populate('userId', 'name') YOU CAN CHOOSE WHICH FIELDS TO PRE-POPULATE
+    .populate('userId')
     .then((products) => {
       res.render('admin/products', {
         prods: products,
