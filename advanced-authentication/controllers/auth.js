@@ -7,6 +7,7 @@ const sendgridTransport = require('nodemailer-sendgrid-transport');
 const SENDGRID_API_KEY = require('../config/sendgrid_api_key');
 
 const User = require('../models/user');
+const user = require('../models/user');
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -184,7 +185,37 @@ exports.getNewPassword = (req, res, next) => {
         pageTitle: 'New Password',
         errorMessage: message,
         userId: user._id.toString(),
+        passwordToken: token,
       });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.postNewPassword = (req, res, next) => {
+  const newPassword = req.body.password;
+  const userId = req.body.userId;
+  const passwordToken = req.body.passwordToken;
+  let resetUser;
+
+  User.findOne({
+    resetToken: passwordToken,
+    resetTokenExpiration: { $gt: Date.now() },
+    _id: userId,
+  })
+    .then((user) => {
+      resetUser = user;
+      return bcrypt.hash(newPassword, 12);
+    })
+    .then((hashedPassword) => {
+      resetUser.password = hashedPassword;
+      resetUser.resetToken = undefined;
+      resetUser.resetTokenExpiration = undefined;
+      return resetUser.save();
+    })
+    .then((result) => {
+      res.redirect('/login');
     })
     .catch((err) => {
       console.log(err);
