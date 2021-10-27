@@ -5,9 +5,9 @@ const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 const { validationResult } = require('express-validator/check');
 
-const SENDGRID_API_KEY = require('../config/sendgrid_api_key');
-
 const User = require('../models/user');
+
+const SENDGRID_API_KEY = require('../config/sendgrid_api_key');
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -62,7 +62,6 @@ exports.postLogin = (req, res, next) => {
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors.array());
     return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
@@ -155,12 +154,12 @@ exports.postSignup = (req, res, next) => {
     })
     .then((result) => {
       res.redirect('/login');
-      return transporter.sendMail({
-        to: email,
-        from: 'nodeshopcourse@mail.ru',
-        subject: 'Signup succeeded!',
-        html: '<h1>You successfully signed up!</h1>',
-      });
+      // return transporter.sendMail({
+      //   to: email,
+      //   from: 'shop@node-complete.com',
+      //   subject: 'Signup succeeded!',
+      //   html: '<h1>You successfully signed up!</h1>'
+      // });
     })
     .catch((err) => {
       const error = new Error(err);
@@ -211,11 +210,11 @@ exports.postReset = (req, res, next) => {
         res.redirect('/');
         transporter.sendMail({
           to: req.body.email,
-          from: 'nodeshopcourse@mail.ru',
-          subject: 'Password Reset',
+          from: 'shop@node-complete.com',
+          subject: 'Password reset',
           html: `
-            <p>You requested a password rest</p>
-            <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password</p>
+            <p>You requested a password reset</p>
+            <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password.</p>
           `,
         });
       })
