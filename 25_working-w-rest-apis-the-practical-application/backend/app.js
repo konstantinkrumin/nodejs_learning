@@ -7,6 +7,7 @@ const multer = require('multer');
 const { v4: uuidv4 } = require('uuid');
 
 const feedRoutes = require('./routes/feed');
+const authRoutes = require('./routes/auth');
 
 const DATABASE_PASSWORD = require('./config/database_password');
 const MONGODB_URI = `mongodb+srv://admin:${DATABASE_PASSWORD}@cluster0.wbnis.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/feed', feedRoutes);
+app.use('/auth', authRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
