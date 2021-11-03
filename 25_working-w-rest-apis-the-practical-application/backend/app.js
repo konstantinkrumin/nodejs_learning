@@ -4,6 +4,9 @@ const mongoose = require('mongoose');
 
 const feedRoutes = require('./routes/feed');
 
+const DATABASE_PASSWORD = require('./config/database_password');
+const MONGODB_URI = `mongodb+srv://admin:${DATABASE_PASSWORD}@cluster0.wbnis.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+
 const app = express();
 
 // app.use(bodyParser.urlencoded()); // x-www-form-urlencoded <form>
@@ -19,7 +22,7 @@ app.use((req, res, next) => {
 app.use('/feed', feedRoutes);
 
 mongoose
-  .connect(process.env['MONGO_URI'])
+  .connect(MONGODB_URI)
   .then((result) => {
     app.listen(8080);
   })
