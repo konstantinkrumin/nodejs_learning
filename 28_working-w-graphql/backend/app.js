@@ -45,10 +45,11 @@ app.use((req, res, next) => {
 });
 
 app.use(
-  '/grapql',
+  '/graphql',
   graphqlHTTP({
     schema: graphqlSchema,
     rootValue: graphqlResolver,
+    graphiql: true,
   })
 );
 
