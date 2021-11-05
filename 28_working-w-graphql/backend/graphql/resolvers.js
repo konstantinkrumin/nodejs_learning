@@ -12,7 +12,7 @@ module.exports = {
       errors.push({ message: 'E-mail is invalid' });
     }
 
-    if (!validator.isEmpty(userInput.password) || !validator.isLength(userInput.password, { min: 5 })) {
+    if (validator.isEmpty(userInput.password) || !validator.isLength(userInput.password, { min: 5 })) {
       errors.push({ message: 'Password too short!' });
     }
 
