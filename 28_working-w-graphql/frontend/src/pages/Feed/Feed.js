@@ -166,6 +166,15 @@ class Feed extends Component {
           throw new Error('User login failed!');
         }
 
+        console.log(resData);
+        const post = {
+          _id: resData.data.createPost._id,
+          title: resData.data.createPost.title,
+          content: resData.data.createPost.content,
+          creator: resData.data.createPost.creator,
+          createdAt: resData.data.createPost.createdAt,
+        };
+
         this.setState((prevState) => {
           return {
             isEditing: false,
