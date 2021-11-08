@@ -9,6 +9,7 @@ const { graphqlHTTP } = require('express-graphql');
 
 const graphqlSchema = require('./graphql/schema');
 const graphqlResolver = require('./graphql/resolvers');
+const auth = require('./middleware/auth');
 
 const DATABASE_PASSWORD = require('./config/database_password');
 const MONGODB_URI = `mongodb+srv://admin:${DATABASE_PASSWORD}@cluster0.wbnis.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
@@ -48,6 +49,8 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.use(auth);
 
 app.use(
   '/graphql',
