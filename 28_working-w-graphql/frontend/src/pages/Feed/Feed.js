@@ -39,23 +39,23 @@ class Feed extends Component {
     this.loadPosts();
   }
 
-  loadPosts = (direction) => {
-    if (direction) {
-      this.setState({ postsLoading: true, posts: [] });
-    }
-    let page = this.state.postPage;
-    if (direction === 'next') {
-      page++;
-      this.setState({ postPage: page });
-    }
-    if (direction === 'previous') {
-      page--;
-      this.setState({ postPage: page });
-    }
+  loadPosts = () => {
+    // if (direction) {
+    //   this.setState({ postsLoading: true, posts: [] });
+    // }
+    // let page = this.state.postPage;
+    // if (direction === 'next') {
+    //   page++;
+    //   this.setState({ postPage: page });
+    // }
+    // if (direction === 'previous') {
+    //   page--;
+    //   this.setState({ postPage: page });
+    // }
     const graphqlQuery = {
       query: `
         {
-          posts(page: ${page}) {
+          posts {
             posts {
               _id
               title
