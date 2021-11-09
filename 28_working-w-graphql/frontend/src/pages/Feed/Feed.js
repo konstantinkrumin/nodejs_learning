@@ -164,7 +164,7 @@ class Feed extends Component {
     })
       .then((res) => res.json())
       .then((fileResData) => {
-        const imageUrl = fileResData.filePath;
+        const imageUrl = fileResData.filePath.replace(/\\/g, '/');
 
         let graphqlQuery = {
           query: `
