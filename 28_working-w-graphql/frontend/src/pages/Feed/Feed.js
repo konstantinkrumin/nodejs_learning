@@ -39,23 +39,24 @@ class Feed extends Component {
     this.loadPosts();
   }
 
-  loadPosts = () => {
-    // if (direction) {
-    //   this.setState({ postsLoading: true, posts: [] });
-    // }
-    // let page = this.state.postPage;
-    // if (direction === 'next') {
-    //   page++;
-    //   this.setState({ postPage: page });
-    // }
-    // if (direction === 'previous') {
-    //   page--;
-    //   this.setState({ postPage: page });
-    // }
+  loadPosts = (direction) => {
+    if (direction) {
+      this.setState({ postsLoading: true, posts: [] });
+    }
+    let page = this.state.postPage;
+    if (direction === 'next') {
+      page++;
+      this.setState({ postPage: page });
+    }
+    if (direction === 'previous') {
+      page--;
+      this.setState({ postPage: page });
+    }
+
     const graphqlQuery = {
       query: `
         {
-          posts {
+          posts(page: ${page}) {
             posts {
               _id
               title
@@ -202,6 +203,7 @@ class Feed extends Component {
             const postIndex = prevState.posts.findIndex((p) => p._id === prevState.editPost._id);
             updatedPosts[postIndex] = post;
           } else {
+            updatedPosts.pop();
             updatedPosts.unshift(post);
           }
           return {
